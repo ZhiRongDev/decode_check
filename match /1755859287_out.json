@@ -1,0 +1,45 @@
+{
+  "singleBloodOxygen": [],
+  "gomoreSleeps": [
+    {
+      "light": 217,
+      "detail": [
+        { "end": "1:55", "type": 0, "total": 5, "start": "1:50" },
+        { "end": "2:04", "type": 1, "total": 9, "start": "1:55" },
+        { "end": "2:10", "type": 3, "total": 6, "start": "2:04" },
+        { "end": "2:18", "type": 1, "total": 8, "start": "2:10" },
+        { "end": "2:37", "type": 2, "total": 19, "start": "2:18" },
+        { "end": "3:06", "type": 1, "total": 29, "start": "2:37" },
+        { "end": "3:44", "type": 2, "total": 38, "start": "3:06" },
+        { "end": "3:50", "type": 1, "total": 6, "start": "3:44" },
+        { "end": "4:18", "type": 3, "total": 28, "start": "3:50" },
+        { "end": "4:35", "type": 1, "total": 17, "start": "4:18" },
+        { "end": "4:40", "type": 3, "total": 5, "start": "4:35" },
+        { "end": "4:46", "type": 1, "total": 6, "start": "4:40" },
+        { "end": "5:19", "type": 2, "total": 33, "start": "4:46" },
+        { "end": "5:40", "type": 1, "total": 21, "start": "5:19" },
+        { "end": "5:55", "type": 3, "total": 15, "start": "5:40" },
+        { "end": "6:55", "type": 1, "total": 60, "start": "5:55" },
+        { "end": "7:25", "type": 3, "total": 30, "start": "6:55" },
+        { "end": "8:26", "type": 1, "total": 61, "start": "7:25" }
+      ],
+      "endTime": 1755822390,
+      "date": 1755822390,
+      "originalStartTime": 1755798600,
+      "type": 1,
+      "deep": 90,
+      "startTime": 1755798600,
+      "rem": 84
+    }
+  ],
+  "fulldaySteps": [],
+  "fulldayHeartRate": [],
+  "singleHeartRate": [],
+  "fulldayHRV": [],
+  "fulldayTemperature": [],
+  "singleStress": [],
+  "singleHRV": [],
+  "trainings": [],
+  "updateDate": 1755859287,
+  "activitys": []
+}
