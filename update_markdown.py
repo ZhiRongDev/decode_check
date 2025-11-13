@@ -84,8 +84,9 @@ def update_section(section_name: str, content: str, comparison_data: Dict) -> st
                     col1756 = field_data.get('1756771600', '')
                     col1755 = field_data.get('1755859287', '')
                     col1754 = field_data.get('1754668881', '')
+                    col_acer = field_data.get('acer', '')
 
-                    updated_lines.append(f"| {field_name} | {field_type} | {field_desc} | {col1756} | {col1755} | {col1754} |  |")
+                    updated_lines.append(f"| {field_name} | {field_type} | {field_desc} | {col1756} | {col1755} | {col1754} | {col_acer} |")
 
                 # 跳过原表格内容
                 i = table_end
@@ -105,14 +106,15 @@ def update_section(section_name: str, content: str, comparison_data: Dict) -> st
                     updated_lines.append("| --- | --- | --- | --- |")
 
                     missing = comparison_data['missing']
-                    max_missing = max(len(missing['1756771600']), len(missing['1755859287']), len(missing['1754668881']), 1)
+                    max_missing = max(len(missing['1756771600']), len(missing['1755859287']), len(missing['1754668881']), len(missing['acer']), 1)
 
                     if any(missing.values()):
                         for idx in range(max_missing):
                             col1756 = missing['1756771600'][idx] if idx < len(missing['1756771600']) else ""
                             col1755 = missing['1755859287'][idx] if idx < len(missing['1755859287']) else ""
                             col1754 = missing['1754668881'][idx] if idx < len(missing['1754668881']) else ""
-                            updated_lines.append(f"| {col1756} | {col1755} | {col1754} |  |")
+                            col_acer = missing['acer'][idx] if idx < len(missing['acer']) else ""
+                            updated_lines.append(f"| {col1756} | {col1755} | {col1754} | {col_acer} |")
                     else:
                         updated_lines.append("|  |  |  |  |")
 
@@ -136,14 +138,15 @@ def update_section(section_name: str, content: str, comparison_data: Dict) -> st
                         updated_lines.append("| --- | --- | --- | --- |")
 
                         extra = comparison_data['extra']
-                        max_extra = max(len(extra['1756771600']), len(extra['1755859287']), len(extra['1754668881']), 1)
+                        max_extra = max(len(extra['1756771600']), len(extra['1755859287']), len(extra['1754668881']), len(extra['acer']), 1)
 
                         if any(extra.values()):
                             for idx in range(max_extra):
                                 col1756 = extra['1756771600'][idx] if idx < len(extra['1756771600']) else ""
                                 col1755 = extra['1755859287'][idx] if idx < len(extra['1755859287']) else ""
                                 col1754 = extra['1754668881'][idx] if idx < len(extra['1754668881']) else ""
-                                updated_lines.append(f"| {col1756} | {col1755} | {col1754} |  |")
+                                col_acer = extra['acer'][idx] if idx < len(extra['acer']) else ""
+                                updated_lines.append(f"| {col1756} | {col1755} | {col1754} | {col_acer} |")
                         else:
                             updated_lines.append("|  |  |  |  |")
 

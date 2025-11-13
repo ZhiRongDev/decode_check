@@ -12,7 +12,8 @@ MARKDOWN_FILE = "match /比對結果.md"
 JSON_FILES = {
     "1756771600": "match /1756771600_out.json",
     "1755859287": "match /1755859287_out.json",
-    "1754668881": "match /1754668881_out.json"
+    "1754668881": "match /1754668881_out.json",
+    "acer": "match /Acer线上数据包内部数据结构.json"
 }
 
 # 字段名到JSON路径的映射
@@ -186,8 +187,8 @@ def compare_fields():
     for section, fields in FIELD_TO_JSON_PATH.items():
         results[section] = {
             "fields": {},
-            "missing": {"1756771600": [], "1755859287": [], "1754668881": []},
-            "extra": {"1756771600": [], "1755859287": [], "1754668881": []}
+            "missing": {"1756771600": [], "1755859287": [], "1754668881": [], "acer": []},
+            "extra": {"1756771600": [], "1755859287": [], "1754668881": [], "acer": []}
         }
 
         # 检查每个字段
