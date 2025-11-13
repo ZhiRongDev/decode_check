@@ -57,12 +57,18 @@ def update_section(section_name: str, content: str, comparison_data: Dict) -> st
     updated_lines = []
     i = 0
 
+    # 获取带标注的标题（如果字段名不同）
+    annotated_title = section_name
+    if section_name in FIELD_NAME_ANNOTATIONS:
+        annotated_title = f"{section_name} ({FIELD_NAME_ANNOTATIONS[section_name]})"
+
     while i < len(lines):
         line = lines[i]
 
-        # 查找section标题
-        if line.strip() == f"# {section_name}":
-            updated_lines.append(line)
+        # 查找section标题（考虑可能已经有标注）
+        if line.strip() == f"# {section_name}" or line.strip().startswith(f"# {section_name} ("):
+            # 使用带标注的标题
+            updated_lines.append(f"# {annotated_title}")
             i += 1
 
             # 跳过空行
@@ -161,6 +167,12 @@ def update_section(section_name: str, content: str, comparison_data: Dict) -> st
         i += 1
 
     return '\n'.join(updated_lines)
+
+# 字段名映射标注（当实际JSON字段名与表格标题不同时）
+FIELD_NAME_ANNOTATIONS = {
+    "Sleep": "gomoreSleeps",  # Sleep 实际对应 gomoreSleeps
+    "SleepDetail": "gomoreSleeps.detail",  # SleepDetail 实际对应 gomoreSleeps 的 detail
+}
 
 # Section名称映射（Markdown中的section名称）
 SECTION_MAPPING = {

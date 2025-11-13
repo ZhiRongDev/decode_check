@@ -143,9 +143,17 @@ def get_nested_field(data: Dict, path: List) -> Tuple[bool, any]:
                 return False, None
             current = current[key]
         elif isinstance(current, list):
-            if not current or len(current) <= key:
+            if not current:
                 return False, None
-            current = current[key]
+            # 对于数组，需要遍历检查是否有任何元素包含该路径
+            # 如果是数组中的索引，检查该索引是否存在
+            if isinstance(key, int):
+                if len(current) <= key:
+                    return False, None
+                current = current[key]
+            else:
+                # 如果不是索引，说明路径有问题
+                return False, None
         else:
             return False, None
     return True, current
@@ -159,8 +167,55 @@ def check_field_exists(data: Dict, section: str, field: str) -> bool:
         return False
 
     path = FIELD_TO_JSON_PATH[section][field]
-    exists, _ = get_nested_field(data, path)
-    return exists
+
+    # 对于嵌套在数组中的字段（如 SleepDetail），需要遍历数组检查
+    # 路径格式如: ["gomoreSleeps", 0, "detail", 0, "start"]
+    # 我们需要检查是否有任何数组元素包含该字段
+
+    # 找到路径中的所有数组索引位置
+    array_indices = []
+    for i, key in enumerate(path):
+        if isinstance(key, int):
+            array_indices.append(i)
+
+    if not array_indices:
+        # 没有数组索引，直接检查
+        exists, _ = get_nested_field(data, path)
+        return exists
+    else:
+        # 有数组索引，需要遍历数组检查
+        # 对于最外层的数组，遍历所有元素
+        base_path = path[:array_indices[0]]
+        exists, array_data = get_nested_field(data, base_path)
+
+        if not exists or not isinstance(array_data, list):
+            return False
+
+        # 遍历数组中的每个元素
+        for item_idx in range(len(array_data)):
+            # 构建新的路径，替换第一个数组索引
+            new_path = base_path + [item_idx] + path[array_indices[0]+1:]
+
+            # 如果有第二层数组（如 detail）
+            if len(array_indices) > 1:
+                # 检查第二层数组
+                second_base_path = new_path[:array_indices[1]]
+                exists2, second_array = get_nested_field(data, second_base_path)
+
+                if exists2 and isinstance(second_array, list) and len(second_array) > 0:
+                    # 遍历第二层数组
+                    for detail_idx in range(len(second_array)):
+                        final_path = second_base_path + [detail_idx] + new_path[array_indices[1]+1:]
+                        exists3, _ = get_nested_field(data, final_path)
+                        if exists3:
+                            return True
+            else:
+                # 只有一层数组
+                exists2, _ = get_nested_field(data, new_path)
+                if exists2:
+                    return True
+
+        return False
 
 def get_all_top_level_fields(data: Dict) -> Set[str]:
     """获取JSON中所有顶层字段"""
